@@ -30,8 +30,6 @@ services:
     image: gripo/gripo-application:beta-1.0
     environment:
       - GRIPO_SERVER_ADDRESS=:5080
-    ports:
-      - "5080:5080"
     depends_on:
       - gripo-db
     networks:
