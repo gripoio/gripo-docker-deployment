@@ -3,7 +3,7 @@ services:
   nginx:
     image: gripo/gripo-nginx:1.0
     environment:
-      - LISTEN_PORT=80
+      - LISTEN_PORT=5055
       - API_BACKEND=http://gripo-application:5080
       - TERMINAL_BACKEND=http://gripo-terminal:8377
       - FRONTEND_BACKEND=http://gripo-frontend:3000
@@ -11,7 +11,7 @@ services:
       - gripo-application
       - gripo-frontend
     ports:
-      - 80:80
+      - 5055:5055
     networks:
       - gripo
   gripo-db:
