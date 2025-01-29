@@ -27,7 +27,7 @@ services:
       - gripo
   gripo-application:
     container_name: gripo-application
-    image: gripo/gripo-application:beta-2.0
+    image: gripo/gripo-application:latest
     environment:
       - GRIPO_SERVER_ADDRESS=:5080
     depends_on:
