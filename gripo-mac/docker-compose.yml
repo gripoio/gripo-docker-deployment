@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  nginx:
+    image: gripo/gripo-nginx:latest
+    environment:
+      - LISTEN_PORT=5055
+      - API_BACKEND=http://gripo-application:5080
+      - TERMINAL_BACKEND=http://gripo-terminal:8377
+      - FRONTEND_BACKEND=http://gripo-frontend:3000
+    depends_on:
+      - gripo-application
+      - gripo-frontend
+    ports:
+      - 5055:5055
+    networks:
+      - gripo
+  gripo-db:
+    image: gripo/gripo-db:mac-latest
+    volumes:
+      - gripodb_data_volume:/data/db
+    networks:
+      - gripo
+  gripo-redis:
+    image: gripo/gripo-redis:latest
+    container_name: gripo-redis
+    networks:
+      - gripo
+  gripo-application:
+    container_name: gripo-application
+    image: gripo/gripo-application:latest
+    environment:
+      - GRIPO_SERVER_ADDRESS=:5080
+    depends_on:
+      - gripo-db
+    networks:
+      - gripo
+  gripo-frontend:
+    container_name: gripo-frontend
+    image: gripo/gripo-frontend:latest
+    restart: always
+    networks:
+      - gripo
+  gripo-terminal:
+    container_name: gripo-terminal
+    image: gripo/gripo-terminal:latest
+    restart: always
+    networks:
+      - gripo
+volumes:
+  gripodb_data_volume:
+networks:
+  gripo:
+    driver: bridge
